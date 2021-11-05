@@ -14,3 +14,7 @@ function flash($msg){
     session_start();
     $_SESSION['err'] = $msg;
 }
+
+function dd($what){
+    die(var_dump($what));
+}

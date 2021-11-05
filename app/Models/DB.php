@@ -7,7 +7,7 @@ use App\Http\Config;
 class DB
 {
     public $connstr = null;
-    public $table = "links";
+    public $table = "users";
     public $query = null;
 
     public $hostname = null;

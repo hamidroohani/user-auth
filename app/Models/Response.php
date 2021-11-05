@@ -15,7 +15,7 @@ class Response
         exit(json_encode(
             [
                 'status' => false,
-                "message" => "An error occurred while connecting, please read the readme file"
+                "message" => "An error occurred while connecting databse, please read the readme file"
             ]
         ));
     }

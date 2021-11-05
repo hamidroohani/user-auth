@@ -44,5 +44,6 @@ class BaseController
     public function redirect($route)
     {
         header("location:" . $route);
+        die();
     }
 }

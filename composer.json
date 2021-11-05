@@ -1,0 +1,14 @@
+{
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }, "files": [
+      "app/helpers/global.php"
+    ]
+  },
+  "require": {
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ext-apache": "*"
+  }
+}

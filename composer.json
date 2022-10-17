@@ -8,7 +8,6 @@
   },
   "require": {
     "ext-mysqli": "*",
-    "ext-json": "*",
-    "ext-apache": "*"
+    "ext-json": "*"
   }
 }

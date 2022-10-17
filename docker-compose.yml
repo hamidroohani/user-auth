@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: nginx-user-auth
+    image: nginx:latest
+    ports:
+      - 8902:80
+      # - 8333:443 #if need ssl
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    links:
+      - phpfpm
+    networks:
+      - app-network
+
+  phpfpm:
+    container_name: phpfpm-user-auth
+    build: ./docker/php/
+    volumes:
+      - .:/var/www
+      - ./docker/php/configs:/usr/local/etc/php/conf.d
+    networks:
+      - app-network
+
+  mysql:
+    container_name: mysql-user-auth
+    image: mysql:latest
+    ports:
+      - 3902:3306
+    volumes:
+      - ./.mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local

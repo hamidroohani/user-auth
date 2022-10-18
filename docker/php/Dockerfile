@@ -1,13 +1,20 @@
-FROM php:fpm-alpine
+FROM php:7.3-fpm
 
 WORKDIR /var/www
 
-RUN docker-php-ext-install mysqli \
-    && docker-php-ext-enable mysqli
+# Update system core
 
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && apk del -f .build-deps
+RUN apt update && apt install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev libxml2-dev libcurl4-gnutls-dev
+
+
+RUN docker-php-ext-install -j$(nproc) mysqli \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
+
+# Start PHP-FPM
+CMD ["php-fpm"]
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

@@ -34,7 +34,7 @@ class RegisterController extends BaseController
         $user->create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'password' => sha1($request['password']),
+            'password' => md5($request['password']),
         ]);
         $this->redirect('/login');
     }

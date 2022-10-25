@@ -1,12 +1,36 @@
 <?php
 
+namespace App\Controllers;
+
 use App\Http\BaseController;
 use App\Models\Response;
 use App\Models\Token;
 use App\Models\User;
 
-class UsersController extends BaseController
+class RegisterController extends BaseController
 {
+    public function show_register_form()
+    {
+        $this->view("login/register");
+    }
+
+    public function register()
+    {
+        $request = $_POST;
+
+        // validate
+        $validate = $this->validate($request, [
+            "name" => "required|min 4",
+            "email" => "required|min 4",
+            "password" => "required|min 4|confirm",
+        ]);
+
+        if (!empty($validate)) {
+            flash($validate);
+            $this->redirect('/register');
+        }
+    }
+
     public function login()
     {
         if (!isset($_POST['email']) || !isset($_POST['password']))

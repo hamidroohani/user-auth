@@ -14,7 +14,7 @@ abstract class DB
 
     public function __construct()
     {
-        $this->connstr = mysqli_connect(Config::HOSTNAME, Config::USERNAME, Config::PASSWORD, Config::DBNAME);
+        $this->connstr = mysqli_connect(\config('MYSQL_HOST'), \config('MYSQL_USERNAME'), \config('MYSQL_PASSWORD'), \config('MYSQL_DATABASE'));
     }
 
     public function check_table_exists()

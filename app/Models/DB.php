@@ -74,4 +74,12 @@ abstract class DB
         }
         return $result;
     }
+
+    public function create($data)
+    {
+        $keys = implode('`,`',array_keys($data));
+        $values = implode("','",array_values($data));
+        $query = "INSERT INTO " . $this->table . " (`" . $keys . "`) VALUES ('" . $values . "')";
+        mysqli_query($this->connstr, $query);
+    }
 }

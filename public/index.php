@@ -2,16 +2,15 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Controllers\HomeController;
-use App\Controllers\LoginController;
 use App\Http\Router;
 
 $router = new Router();
 
 //"ProductController::class"
-$router->add("GET", "", HomeController::class, "index");
-$router->add("GET", "login", LoginController::class, "index");
-$router->add("GET", "register", LoginController::class, "index");
+$router->add("GET", "", App\Controllers\HomeController::class, "index");
+$router->add("GET", "login", App\Controllers\LoginController::class, "index");
+$router->add("GET", "register", \App\Controllers\RegisterController::class, "show_register_form");
+$router->add("POST", "register", \App\Controllers\RegisterController::class, "register");
 
 try {
     echo $router->dispatch();

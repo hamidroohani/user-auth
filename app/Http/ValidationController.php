@@ -19,4 +19,12 @@ class ValidationController
         }
         return null;
     }
+
+    public function confirm($request, $field, $value)
+    {
+        if (!isset($request[$field]) || !isset($request['confirm']) || $request['confirm'] !== $request[$field]) {
+            return [$field => "the " . $field . " field is not match with confirm"];
+        }
+        return null;
+    }
 }

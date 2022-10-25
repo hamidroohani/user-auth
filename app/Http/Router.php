@@ -2,8 +2,6 @@
 
 namespace App\Http;
 
-use Exception;
-
 class Router
 {
     protected $routes = [];
@@ -57,6 +55,6 @@ class Router
             }
         }
 
-        throw new Exception('Route not found', 404);
+        throw new \Exception('Route not found', 404);
     }
 }

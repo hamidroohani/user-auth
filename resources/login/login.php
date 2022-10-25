@@ -1,4 +1,4 @@
-<form action="/login/check" method="post">
+<form action="/login" method="post">
     <input type="text" name="username">
     <?php show_errors("username"); ?>
     <input type="password" name="password">

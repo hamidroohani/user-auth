@@ -12,7 +12,7 @@ class LoginController extends BaseController
         $this->view("login/login");
     }
 
-    public function check()
+    public function login()
     {
         $request = $_POST;
 
@@ -48,8 +48,7 @@ class LoginController extends BaseController
             $this->redirect('/login');
         }
 
-        dd($user);
-
         // redirect
+        $this->redirect('/');
     }
 }

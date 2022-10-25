@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http;
+namespace App\Controllers;
+
+use App\Http\Config;
 
 class BaseController
 {

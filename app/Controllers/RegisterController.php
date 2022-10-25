@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Http\BaseController;
 use App\Models\Response;
 use App\Models\Token;
 use App\Models\User;

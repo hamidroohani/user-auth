@@ -55,4 +55,13 @@ class LoginController extends BaseController
         // redirect
         $this->redirect('/');
     }
+
+    public function logout()
+    {
+        session_start();
+        unset($_SESSION["user_id"]);
+        unset($_SESSION["user_name"]);
+        session_destroy();
+        $this->redirect('/');
+    }
 }

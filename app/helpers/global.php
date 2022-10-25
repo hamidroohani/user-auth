@@ -7,6 +7,7 @@ function show_errors($field){
         foreach ($err[$field] as $e){
             echo $e;
         }
+        unset($_SESSION['err'][$field]);
     }
 }
 

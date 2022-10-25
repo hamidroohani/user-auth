@@ -13,5 +13,25 @@ class Config
     const USERNAME = "root";
     const PASSWORD = "password";
     const DBNAME = "user-auth";
+    private static $file;
+
+    public static function read_file()
+    {
+        $file = file_get_contents(__DIR__ . '/../../.environment');
+        $file = preg_split('/\s+/', $file);
+        $result = [];
+        foreach ($file as $item)
+        {
+            $values = explode("=",$item);
+            $result[$values[0]] = $values[1] ?? '';
+        }
+        self::$file = $result;
+    }
+
+    public static function config($key)
+    {
+        self::read_file();
+        return self::$file[$key] ?? null;
+    }
 
 }

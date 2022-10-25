@@ -18,3 +18,7 @@ function flash($msg){
 function dd($what){
     die(var_dump($what));
 }
+
+function config($key){
+    return \App\Http\Config::config($key);
+}

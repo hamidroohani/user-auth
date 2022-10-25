@@ -27,4 +27,12 @@ class ValidationController
         }
         return null;
     }
+
+    public function email($request, $field, $value)
+    {
+        if (!isset($request[$field]) || !filter_var($request[$field], FILTER_VALIDATE_EMAIL)) {
+            return [$field => "Invalid email format"];
+        }
+        return null;
+    }
 }

@@ -21,7 +21,7 @@ class RegisterController extends BaseController
         // validate
         $validate = $this->validate($request, [
             "name" => "required|min 4",
-            "email" => "required|min 4",
+            "email" => "required|email|min 4",
             "password" => "required|min 4|confirm",
         ]);
 

@@ -29,6 +29,14 @@ class RegisterController extends BaseController
             flash($validate);
             $this->redirect('/register');
         }
+
+        $user = new User();
+        $user->create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => sha1($request['password']),
+        ]);
+        $this->redirect('/login');
     }
 
     public function login()

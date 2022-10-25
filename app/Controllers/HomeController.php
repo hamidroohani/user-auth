@@ -9,6 +9,11 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $this->view("home");
+        session_start();
+        $name = '';
+        if (isset($_SESSION['user_name'])){
+            $name = $_SESSION['user_name'];
+        }
+        $this->view("home",['name' => $name]);
     }
 }

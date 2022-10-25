@@ -17,7 +17,6 @@ class BaseController
     {
         $template = file_get_contents(Config::LAYOUT_PATH);
         print str_replace("{{content}}", $content, $template);
-        session_destroy();
     }
 
     public function validate($request, $validation)

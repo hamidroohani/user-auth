@@ -5,10 +5,13 @@ namespace App\Http;
 class Router
 {
     protected $routes = [];
+    protected $middlewares = [
+        'json' => \App\Http\Middleware\JsonResponse::class
+    ];
 
-    public function add(string $method, string $path, string $controllerName, string $action)
+    public function add(string $method, string $path, string $controllerName, string $action, array $middleware = [])
     {
-        return $this->routes[] = array("method" => $method, "path" => $path, "controller" => $controllerName, "action" => $action);
+        $this->routes[] = array("method" => $method, "path" => $path, "controller" => $controllerName, "action" => $action, 'middleware' => $middleware);
     }
 
     public function dispatch()
@@ -18,13 +21,14 @@ class Router
         $path = $route['path'];
         $controller = $route['controller'];
         $action = $route['action'];
+        $middleware = $route['middleware'];
 
         if (preg_match("/[\d]+/", $path, $matches)) {
             $digitsFromPath = (int)implode(" ", $matches);
-            //$tableColumns['id'] = $id;
             $id = $digitsFromPath;
         }
 
+        $this->run_middlewares($middleware);
         $controller = new $controller;
         return $controller->$action($id);
     }
@@ -56,5 +60,23 @@ class Router
         }
 
         throw new \Exception('Route not found', 404);
+    }
+
+    public function run_middlewares(array $middlewares)
+    {
+        if (!count($middlewares)) return null;
+
+        foreach ($middlewares as $key => $middleware) {
+            $current = new $this->middlewares[$middleware];
+            if (isset($middlewares[$key + 1])) {
+                $next = $middlewares[$key + 1];
+                $current->setNext(new $this->middlewares[$next]);
+            }
+            if ($key === 0) {
+                $first_middleware = $current;
+            }
+        }
+
+        $first_middleware->handle($_REQUEST);
     }
 }

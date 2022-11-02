@@ -10,12 +10,6 @@ class Kernel
 
     public function handle()
     {
-        // middleware
-        $middlewares = [
-            \App\Http\Middleware\JsonResponse::class
-        ];
-        $this->run_middlewares($middlewares);
-
         //routes
         $router = new Router();
 
@@ -28,9 +22,8 @@ class Kernel
 
         try {
             echo $router->dispatch();
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $errorCode = $exception->getCode();
-            $errorCode = 500;
             $data = [
                 "errorMessage" => $exception->getMessage(),
                 "errorCode" => $errorCode
@@ -40,24 +33,6 @@ class Kernel
             echo json_encode(["data" => $data], JSON_PRETTY_PRINT);
         }
 
-    }
-
-    public function run_middlewares(array $middlewares)
-    {
-        if (!count($middlewares)) return null;
-
-        foreach ($middlewares as $key => $middleware) {
-            $current = new $middleware;
-            if (isset($middlewares[$key + 1])) {
-                $next = $middlewares[$key + 1];
-                $current->setNext(new $next);
-            }
-            if ($key === 0) {
-                $first_middleware = $current;
-            }
-        }
-
-        $first_middleware->handle($_REQUEST);
     }
 }
 
